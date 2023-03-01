@@ -1,0 +1,1206 @@
+﻿<Window xmlns:c1="http://schemas.componentone.com/winfx/2006/xaml"  x:Class="LMFOperatorScreen.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LMFOperatorScreen"
+        mc:Ignorable="d"
+        xmlns:System="clr-namespace:System;assembly=mscorlib"
+        Title="LMF" Height="{x:Static SystemParameters.PrimaryScreenHeight}" Width="{x:Static SystemParameters.PrimaryScreenWidth}" WindowState="Maximized" Closing="End_Thread">
+    <Border Margin="1,1">
+        <DockPanel LastChildFill="True" Margin="5,5">
+            <StackPanel DockPanel.Dock="Top" Background="LightGray">
+                <!--TopBar-->
+                <Grid Margin="1,1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="100"/>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Label Content="LMF " Grid.Column="0" Grid.Row="0" FontWeight="SemiBold" FontSize="12" Margin="1,1"/>
+                    <ComboBox x:Name="LMFComboBox" Grid.Column="1" Width="75" HorizontalAlignment="Left" Margin="1,1,0,0" Height="26" VerticalAlignment="Top" SelectionChanged="LMF_Selection_Change"/>
+                    <Button x:Name="ShowSchdButton" Content="View Schedule" Grid.Column="3" HorizontalAlignment="Right" Background="LightSteelBlue" Foreground="White" Margin="10,1" Click="SchdButton_Click"/>
+                </Grid>
+            </StackPanel>
+            <TabControl Margin="1,1">
+                <TabItem Header="LMF Overview">
+                    <DockPanel LastChildFill="True">
+                        <StackPanel DockPanel.Dock="Bottom" Background="White">
+                            <!--TWO-->
+                            <Grid Margin="1,1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <!--LMF Charge Info-->
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="225"/>
+                                    <ColumnDefinition Width="475"/>
+                                    <ColumnDefinition Width="550"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Border Grid.Column="0" Grid.Row="0" Background="DarkGray"/>
+                                <Label x:Name="FluxComLabel" Content="Flux Comment" Grid.Column="0" Grid.Row="0" FontWeight="SemiBold" FontSize="14" FontStyle="Italic" Foreground="White" HorizontalAlignment="Left" Margin="1,1"/>
+                                <Border Grid.Column="1" Grid.Row="0" Background="DarkGray"/>
+                                <Label x:Name="SpecialInstLabel" Content="Special Instructions" Grid.Column="1" Grid.Row="0" FontWeight="SemiBold" FontSize="14" FontStyle="Italic" Foreground="White" HorizontalAlignment="Left" Margin="1,1"/>
+                                <Border Grid.Column="2" Grid.Row="0" Background="DarkGray"/>
+                                <Label x:Name="WorkFlowLabel" Content="Work Flow" Grid.Column="2" Grid.Row="0" FontWeight="SemiBold" FontSize="14" FontStyle="Italic" Foreground="White" HorizontalAlignment="Left" Margin="1,1"/>
+                                <Border Grid.Column="3" Grid.Row="0" Background="DarkGray"/>
+                                <Label x:Name="TempsLabel" Content="Temp" Grid.Column="3" Grid.Row="0" FontWeight="SemiBold" FontSize="14" FontStyle="Italic" Foreground="White" HorizontalAlignment="Left" Margin="1,1"/>
+                                <Grid Grid.Column="0" Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="300"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Label x:Name="WIDoloLabel" Content="Dolo - " Grid.Column="0" Grid.Row="0" FontWeight="SemiBold" HorizontalAlignment="Left" Margin="1,1"/>
+                                    <Label x:Name="WILimeLabel" Content="Lime - " Grid.Column="0" Grid.Row="1" FontWeight="SemiBold" HorizontalAlignment="Left" Margin="1,1"/>
+                                    <Label x:Name="WISparLabel" Content="Spar - " Grid.Column="0" Grid.Row="2" FontWeight="SemiBold" HorizontalAlignment="Left" Margin="1,1"/>
+                                    <Label x:Name="WICaLabel" Content="CaAl - " Grid.Column="0" Grid.Row="3" FontWeight="SemiBold" HorizontalAlignment="Left" Margin="1,1"/>
+                                    <Label x:Name="WISilicaLabel" Content="Silica - " Grid.Column="0" Grid.Row="4" FontWeight="SemiBold" HorizontalAlignment="Left" Margin="1,1"/>
+
+                                </Grid>
+                                <DockPanel Grid.Column="1" Grid.Row="1">
+                                    <DataGrid x:Name="SpecialInstrGrid" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Auto" VerticalAlignment="Top" AutoGenerateColumns="False" Margin="5,5" AlternationCount="2" FrozenColumnCount="2" IsReadOnly="True">
+                                        <DataGrid.Resources>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="Height" Value="30"/>
+                                                <Setter Property="FontStretch" Value="Normal"/>
+                                                <Setter Property="Background" Value="Gray"/>
+                                                <Setter Property="Foreground" Value="White"/>
+                                                <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                                <Setter Property="BorderBrush" Value="Black"/>
+                                            </Style>
+                                            <Style TargetType="{x:Type DataGridCell}">
+                                                <Setter Property="BorderThickness" Value="1,1,1,1"/>
+                                                <Setter Property="BorderBrush" Value="Black"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter Property="Background" Value="Blue"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                            <Style TargetType="{x:Type DataGridRow}">
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                <Setter Property="BorderBrush" Value="Black"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                                        <Setter Property="Background" Value="LightGray"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DataGrid.Resources>
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Order" Binding="{Binding OrderByThis}" Width="40"/>
+                                            <DataGridTextColumn Header="Special Instruction" Binding="{Binding Instruction}" Width="*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </DockPanel>
+                                <DockPanel Grid.Column="2" Grid.Row="1">
+                                    <DataGrid x:Name="WorkFlowGrid" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" AutoGenerateColumns="False" Margin="5,5" AlternationCount="2" FrozenColumnCount="2" IsReadOnly="True">
+                                        <DataGrid.Resources>
+                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                <Setter Property="Height" Value="30"/>
+                                                <Setter Property="FontStretch" Value="Normal"/>
+                                                <Setter Property="Background" Value="Gray"/>
+                                                <Setter Property="Foreground" Value="White"/>
+                                                <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                                <Setter Property="BorderBrush" Value="Black"/>
+                                            </Style>
+                                            <Style TargetType="{x:Type DataGridCell}">
+                                                <Setter Property="BorderThickness" Value="1,1,1,1"/>
+                                                <Setter Property="BorderBrush" Value="Black"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="IsSelected" Value="True">
+                                                        <Setter Property="Background" Value="Blue"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                            <Style TargetType="{x:Type DataGridRow}">
+                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                <Setter Property="BorderBrush" Value="Black"/>
+                                                <Style.Triggers>
+                                                    <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                                        <Setter Property="Background" Value="LightGray"/>
+                                                    </Trigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </DataGrid.Resources>
+                                        <DataGrid.Columns>
+                                            <DataGridTextColumn Header="Order" Binding="{Binding OrderByThis}" Width="40"/>
+                                            <DataGridTextColumn Header="Work Flow" Binding="{Binding WorkFlow}" Width="*">
+                                                <DataGridTextColumn.ElementStyle>
+                                                    <Style TargetType="TextBlock">
+                                                        <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                                    </Style>
+                                                </DataGridTextColumn.ElementStyle>
+                                            </DataGridTextColumn>
+                                        </DataGrid.Columns>
+                                    </DataGrid>
+                                </DockPanel>
+                                <c1:C1Chart Name="TempChart" Grid.Row="1" Grid.Column="3" ChartType="LineSmoothed" Height="150" Margin="5,5">
+                                    <c1:C1Chart.Data>
+                                        <c1:ChartData>
+                                            <!--<c1:DataSeries Name="RecordedTemps" Label="Temp" RenderMode="Default"/>-->
+                                            
+                                        </c1:ChartData>
+                                    </c1:C1Chart.Data>
+                                    <c1:C1ChartLegend/>
+                                </c1:C1Chart>
+                                <!--<Grid Grid.Column="2" Grid.Row="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    -->
+                                <!--ChemComments-->
+                                <!--
+                                    <TextBox x:Name="ChemCommentTextBox" IsReadOnly="True" AcceptsReturn="True" Text="Take a Celox Reading right when the ladle arrives at the LMF." Margin="1,1"/>
+                                </Grid>-->
+                                <Grid Grid.Column="2">
+
+                                </Grid>
+                            </Grid>
+                        </StackPanel>
+                        <StackPanel DockPanel.Dock="Right" Background="white" Margin="5,5">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Label x:Name="LastChemLabel" Grid.Row="0" Content="Last Chem -" Background="DarkGray" Foreground="White" FontWeight="SemiBold" Margin="1,1"/>
+                                <DataGrid x:Name="ChemGrid" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" AutoGenerateColumns="False" AlternationCount="2" FrozenColumnCount="2" IsReadOnly="True">
+                                    <DataGrid.Resources>
+                                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                                            <Setter Property="Height" Value="30"/>
+                                            <Setter Property="FontStretch" Value="Normal"/>
+                                            <Setter Property="Background" Value="Gray"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                        </Style>
+                                        <Style TargetType="{x:Type DataGridCell}">
+                                            <Setter Property="BorderThickness" Value="1,1,1,1"/>
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter Property="Background" Value="Blue"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                        <Style TargetType="{x:Type DataGridRow}">
+                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                                    <Setter Property="Background" Value="LightGray"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGrid.Resources>
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Element" FontWeight="Bold" Binding="{Binding Element}" Width="75"/>
+                                        <DataGridTextColumn Header="Results" FontWeight="Bold" Binding="{Binding Results}" Width="75"/>
+                                        <DataGridTextColumn Header="Aim" FontWeight="Bold" Binding="{Binding Aim}" Width="75"/>
+                                        <DataGridTextColumn Header="Min" FontWeight="Bold" Binding="{Binding Min}" Width="75"/>
+                                        <DataGridTextColumn Header="Max" FontWeight="Bold" Binding="{Binding Max}" Width="75"/>
+                                        <DataGridTemplateColumn Header="Spec" Width="SizeToCells" IsReadOnly="True">
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Image Source="{Binding Spec}" Width="40" Height="25"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                            </Grid>
+
+                        </StackPanel>
+                        <!--Body-->
+                        <StackPanel Background="white" Margin="5,5">
+                            <!--Main Body-->
+                            <StackPanel>
+                                <Grid Margin="5,5">
+                                    <!--MS OVERVIEW-->
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid Grid.Column="0">
+                                            <!--EAF/LMF/VTD-->
+                                            <StackPanel>
+                                                <Grid Margin="1,1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid Grid.Column="0">
+                                                        <!--EAF-B/LMF-1/VTD-->
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="*"/>
+                                                            <RowDefinition Height="*"/>
+                                                            <RowDefinition Height="*"/>
+                                                        </Grid.RowDefinitions>
+                                                        <GroupBox Header="EAF-B" Grid.Row="0" FontWeight="Bold" FontSize="14" BorderThickness="3" Background="LightGray">
+                                                            <Grid Margin="1,1">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                </Grid.RowDefinitions>
+                                                                <Label x:Name="EAFBHeatLabel" Content="EAFBHeatNumber - " Grid.Row="0" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="EAFBLadleLabel" Content="EAFBLadle - " Grid.Row="1" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="EAFBStateLabel" Content="State - " Grid.Row="2" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="EAFBGradeLabel" Content="EAFBGradeName - " Grid.Row="3" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="EAFBTempLabel" Content="EAFBTemp - " Grid.Row="4" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="EAFBKWHLabel" Content="EAFBKWH - " Grid.Row="5" FontWeight="SemiBold" Margin="1,1"/>
+                                                            </Grid>
+                                                        </GroupBox>
+                                                        <GroupBox Header="LMF-1" x:Name="LMF1GroupBox" Grid.Row="1" FontWeight="Bold" FontSize="14" BorderThickness="3" Background="LightGray">
+                                                            <Grid Margin="1,1">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                </Grid.RowDefinitions>
+                                                                <Label x:Name="LMF1HeatLabel" Content="LMF1Heat - " Grid.Row="0" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="LMF1LadleLabel" Content="Ladle - " Grid.Row="1" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="LMF1PowerLabel" Content="Power - " Grid.Row="2" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="LMF1GradeLabel" Content="Grade - " Grid.Row="3" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="LMF1StartLabel" Content="Start - " Grid.Row="4" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="LMF1KWHLabel" Content="KWH - " Grid.Row="5" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="LMF1LiquidusLabel" Content="Liquidus -" Grid.Row="6" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="LMF1JomineyLabel" Content="Jominey" Grid.Row="7" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="LMF1SteelWeightLabel" Content="Steel Weight -" Grid.Row="8" FontWeight="SemiBold" Margin="1,1"/>
+                                                            </Grid>
+                                                        </GroupBox>
+                                                        <GroupBox Header="VTD" Grid.Row="2" FontWeight="Bold" FontSize="14" BorderThickness="3" Background="LightGray">
+                                                            <Grid Margin="1,1">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                </Grid.RowDefinitions>
+                                                                <Label x:Name="VTDHeatLabel" Content="Heat - " Grid.Row="0" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="VTDLadleLabel" Content="Ladle - " Grid.Row="1" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="VTDStateLabel" Content="State - " Grid.Row="2" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="VTDGradeLabel" Content="Grade - " Grid.Row="3" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="VTDStartLabel" Content="Start - " Grid.Row="4" FontWeight="SemiBold" Margin="1,1"/>
+                                                            </Grid>
+                                                        </GroupBox>
+                                                    </Grid>
+                                                    <Grid Grid.Column="1">
+                                                        <!--EAF-A/LMF-2-->
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="*"/>
+                                                            <RowDefinition Height="*"/>
+                                                            <RowDefinition Height="177"/>
+                                                        </Grid.RowDefinitions>
+                                                        <GroupBox Header="EAF-A" Grid.Row="0" FontWeight="Bold" FontSize="14" BorderThickness="3" Background="LightGray">
+                                                            <Grid Margin="1,1">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                </Grid.RowDefinitions>
+                                                                <Label x:Name="EAFAHeatLabel" Content="EAFAHeatNumber - " Grid.Row="0" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="EAFALadleLabel" Content="EAFALadle - " Grid.Row="1" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="EAFAStaeLabel" Content="State - " Grid.Row="2" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="EAFAGradeLabel" Content="EAFAGradeName - " Grid.Row="3" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="EAFATempLabel" Content="EAFATemp - " Grid.Row="4" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="EAFAKWHLabel" Content="EAFAKWHOverView - " Grid.Row="5" FontWeight="SemiBold" Margin="1,1"/>
+                                                            </Grid>
+                                                        </GroupBox>
+                                                        <GroupBox Header="LMF-2" x:Name="LMF2GroupBox" Grid.Row="1" FontWeight="Bold" FontSize="14" BorderThickness="3" Background="LightGray">
+                                                            <Grid Margin="1,1">
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                    <RowDefinition Height="30"/>
+                                                                </Grid.RowDefinitions>
+                                                                <Label x:Name="LMF2HeatLabel" Content="LMF2HeatNumber - " Grid.Row="0" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="LMF2LadleLabel" Content="LMF2Ladle - " Grid.Row="1" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="LMF2PowerLabel" Content="Power - " Grid.Row="2" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="LMF2GradeLabel" Content="LMF2GradeName - " Grid.Row="3" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="LMF2StartLabel" Content="LMF2Start - " Grid.Row="4" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="LMF2KWH" Content="KWH - " Grid.Row="5" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="LMF2LiquidusLabel" Content="Liquidus - " Grid.Row="6" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="LMF2JomineyLabel" Content="Jominey " Grid.Row="7" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="LMF2SteelWeightLabel" Content="Steel Weight - " FontWeight="SemiBold" Grid.Row="8" Margin="1,1"/>
+                                                            </Grid>
+                                                        </GroupBox>
+                                                    </Grid>
+                                                </Grid>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Grid Grid.Column="1">
+                                            <!--CASTER-->
+                                            <Grid Margin="1,1">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="*"/>
+                                                    <RowDefinition Height="*"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid Grid.Row="0">
+                                                    <!--Current/Waitin Heat-->
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <!--Current Heat-->
+                                                        <GroupBox Header="Casting" Grid.Column="0" FontWeight="Bold" FontSize="14" BorderThickness="3" Background="LightGray">
+                                                            <Grid>
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="32"/>
+                                                                    <RowDefinition Height="32"/>
+                                                                    <RowDefinition Height="32"/>
+                                                                    <RowDefinition Height="32"/>
+                                                                    <RowDefinition Height="32"/>
+                                                                </Grid.RowDefinitions>
+                                                                <Label x:Name="CasterCastingHeatLabel" Content="Heat - " Grid.Row="0" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="CasterLadleLabel" Content="Ladle - " Grid.Row="1" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="CasterGradeLabel" Content="Grade - " Grid.Row="2" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="CasterLdlWghtLabel" Content="Weight - " Grid.Row="3" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="CasterModeLabel" Content="Mode - " Grid.Row="4" FontWeight="SemiBold"  Margin="1,1"/>
+                                                            </Grid>
+                                                        </GroupBox>
+                                                        <GroupBox Header="Waiting" Grid.Column="1" FontWeight="Bold" FontSize="14" BorderThickness="3" Background="LightGray">
+                                                            <Grid>
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="32"/>
+                                                                    <RowDefinition Height="32"/>
+                                                                    <RowDefinition Height="32"/>
+                                                                </Grid.RowDefinitions>
+                                                                <Label Content="Heat - " Grid.Row="0" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label Content="Ladle - " Grid.Row="1" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label Content="Grade - " Grid.Row="2" FontWeight="SemiBold" Margin="1,1"/>
+                                                            </Grid>
+                                                        </GroupBox>
+                                                    </Grid>
+                                                </Grid>
+
+                                                <Grid Grid.Row="2">
+                                                    <!--General Info-->
+                                                    <GroupBox Header="General" FontWeight="Bold" FontSize="14" BorderThickness="3" Background="LightGray">
+                                                        <Grid>
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                            </Grid.ColumnDefinitions>
+                                                            <Grid Grid.Column="0">
+                                                                <Grid>
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="32"/>
+                                                                        <RowDefinition Height="32"/>
+                                                                        <RowDefinition Height="32"/>
+                                                                        <RowDefinition Height="32"/>
+                                                                    </Grid.RowDefinitions>
+                                                                    <Label x:Name="OpenHeatLabel" Content="Open Heat - " Grid.Row="0" FontWeight="SemiBold" Margin="1,1"/>
+                                                                    <Label x:Name="CastLadleWeightLabel" Content="Cast Ladle Wgt - " Grid.Row="1" FontWeight="SemiBold" Margin="1,1"/>
+                                                                    <Label x:Name="TonsPerHourLabel" Content="Tons Per Hour - " Grid.Row="2" FontWeight="SemiBold" Margin="1,1"/>
+                                                                    <Label x:Name="MinTillEmptyLabel" Content="Min Till Empty - " Grid.Row="3" FontWeight="SemiBold" Margin="1,1"/>
+                                                                </Grid>
+                                                            </Grid>
+                                                            <Grid Grid.Column="1">
+                                                                <Grid>
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="32"/>
+                                                                        <RowDefinition Height="32"/>
+                                                                        <RowDefinition Height="32"/>
+                                                                    </Grid.RowDefinitions>
+                                                                    <Label x:Name="CastingHeatLabel" Content="Caster Heat - " Grid.Row="0" FontWeight="SemiBold" Margin="1,1"/>
+                                                                    <Label x:Name="TundTempLabel" Content="Tund Temp - " Grid.Row="1" FontWeight="SemiBold" Margin="1,1"/>
+                                                                    <Label x:Name="TungWgtLabel" Content="Tund Wgt - " Grid.Row="2" FontWeight="SemiBold" Margin="1,1"/>
+                                                                </Grid>
+                                                            </Grid>
+                                                        </Grid>
+                                                    </GroupBox>
+
+                                                </Grid>
+
+                                                <Grid Grid.Row="1">
+                                                    <!--Strand Info-->
+                                                    <Grid>
+                                                        <GroupBox Header="Strands" FontWeight="Bold" FontSize="14" BorderThickness="3" Background="LightGray">
+                                                            <Grid>
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="32"/>
+                                                                    <RowDefinition Height="32"/>
+                                                                    <RowDefinition Height="32"/>
+                                                                    <RowDefinition Height="32"/>
+                                                                    <RowDefinition Height="32"/>
+                                                                </Grid.RowDefinitions>
+                                                                <Label x:Name="Strand1Label" Content="Strand 1 Status - " Grid.Column="0" Grid.Row="0" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="Strand2Label" Content="Strand 2 Status - " Grid.Column="0" Grid.Row="1" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="Strand3Label" Content="Strand 3 Status - " Grid.Column="0" Grid.Row="2" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="Strand4Label" Content="Strand 4 Status - " Grid.Column="0" Grid.Row="3" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="Strand5Label" Content="Strand 5 Status - " Grid.Column="0" Grid.Row="4" FontWeight="SemiBold" Margin="1,1"/>
+
+                                                                <Label x:Name="Gate1PosLabel" Content="Gate 1 -" Grid.Column="1" Grid.Row="0" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="Gate2PosLabel" Content="Gate 2 -" Grid.Column="1" Grid.Row="1" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="Gate3PosLabel" Content="Gate 3 -" Grid.Column="1" Grid.Row="2" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="Gate4PosLabel" Content="Gate 4 -" Grid.Column="1" Grid.Row="3" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="Gate5PosLabel" Content="Gate 5 -" Grid.Column="1" Grid.Row="4" FontWeight="SemiBold" Margin="1,1"/>
+
+                                                                <Label x:Name="Heat1RemovalLabel" Content="Heat Removal 1 -" Grid.Column="2" Grid.Row="0" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="Heat2RemovalLabel" Content="Heat Removal 2 -" Grid.Column="2" Grid.Row="1" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="Heat3RemovalLabel" Content="Heat Removal 3 -" Grid.Column="2" Grid.Row="2" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="Heat4RemovalLabel" Content="Heat Removal 4 -" Grid.Column="2" Grid.Row="3" FontWeight="SemiBold" Margin="1,1"/>
+                                                                <Label x:Name="Heat5RemovalLabel" Content="Heat Removal 5 -" Grid.Column="2" Grid.Row="4" FontWeight="SemiBold" Margin="1,1"/>
+                                                            </Grid>
+                                                        </GroupBox>
+
+                                                    </Grid>
+                                                </Grid>
+                                            </Grid>
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+
+                            </StackPanel>
+                        </StackPanel>
+                    </DockPanel>
+                </TabItem>
+                <TabItem Header="History">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="Heat Number" Grid.Column="0" FontWeight="SemiBold" Margin="1,1"/>
+                                <ComboBox x:Name="SearchHeatCombo" IsEditable="True" Grid.Column="1" Margin="1,1"/>
+                                <Button Content="Search" x:Name="SearchHeatsButton" Grid.Column="2" Margin="1,1" Click="HeatSearchButton_Click"/>
+                                <Button Content="Clear" x:Name="ClearSearchButton" Grid.Column="3" Margin="1,1" Click="ClearSearchButton_Click"/>
+                            </Grid>
+                            
+                            <TabControl Grid.Row="1" Height="auto" Width="auto">
+                                <TabItem Header="Process">
+                                    <DockPanel LastChildFill="True">
+                                        <StackPanel DockPanel.Dock="Top" Margin="5,5">
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <GroupBox x:Name="Visit1GroupBox" Header="Visit 1" Grid.Column="0" FontWeight="SemiBold" Margin="1,1">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid Grid.Column="0" Margin="1,1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Label x:Name="Visit1GradeLabel" Content="Grade - " Grid.Row="0" FontWeight="SemiBold" Margin="1,1"/>
+                                                            <Label x:Name="Visit1LadleLabel" Content="Ladle - " Grid.Row="1" FontWeight="SemiBold" Margin="1,1"/>
+                                                            <Label x:Name="Visit1StartLabel" Content="Start Time - " Grid.Row="2" FontWeight="SemiBold" Margin="1,1"/>
+                                                            <Label x:Name="Visit1EndLabel" Content="End Time - " Grid.Row="3" FontWeight="SemiBold" Margin="1,1"/>
+                                                            <Label x:Name="Visit1KWHLabel" Content="KWH - " Grid.Row="4" FontWeight="SemiBold" Margin="1,1"/>
+                                                        </Grid>
+
+                                                        <Grid Grid.Column="1" Margin="1,1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Label x:Name="Practice" Content="Practice - " Grid.Row="0" FontWeight="SemiBold" Margin="1,1"/>
+                                                            <Label x:Name="Visit1Liquidous" Content="Liquidus - " Grid.Row="1" FontWeight="SemiBold" Margin="1,1"/>
+                                                            <Label x:Name="Visit1JomineyLabel" Content="Jominey" Grid.Row="2" FontWeight="SemiBold" Margin="1,1"/>
+                                                            <Label x:Name="Visit1WeightLabel" Content="Steel Weight -" Grid.Row="3" FontWeight="SemiBold" Margin="1,1"/>
+                                                            <Label x:Name="Visit1GasStirLabel" Content="Gas Stir - " Grid.Row="4" FontWeight="SemiBold" Margin="1,1"/>
+                                                            <Label x:Name="Visit1PowerOnLabel" Content="Power On - " Grid.Row="5" FontWeight="SemiBold" Margin="1,1"/>
+                                                        </Grid>
+                                                    </Grid>
+                                                </GroupBox>
+
+                                                <GroupBox x:Name="Visit2GroupBox" Header="Visit 2" Grid.Column="1" FontWeight="SemiBold" Margin="1,1">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid Grid.Column="0" Margin="1,1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Label x:Name="Visit2StartLabel" Content="Start Time - " Grid.Row="0" FontWeight="SemiBold" Margin="1,1"/>
+                                                            <Label x:Name="Visit2EndLabel" Content="End Time - " Grid.Row="1" FontWeight="SemiBold" Margin="1,1"/>
+                                                            <Label x:Name="Visit2KWHLabel" Content="KWH - " Grid.Row="2" FontWeight="SemiBold" Margin="1,1"/>
+                                                            <Label x:Name="Visit2Liquidous" Content="Liquidus - " Grid.Row="3" FontWeight="SemiBold" Margin="1,1"/>
+                                                        </Grid>
+
+                                                        <Grid Grid.Column="1" Margin="1,1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Label x:Name="Visit2JomineyLabel" Content="Jominey" Grid.Row="0" FontWeight="SemiBold" Margin="1,1"/>
+                                                            <Label x:Name="Visit2WeightLabel" Content="Steel Weight -" Grid.Row="1" FontWeight="SemiBold" Margin="1,1"/>
+                                                            <Label x:Name="Visit2GasStirLabel" Content="Gas Stir - " Grid.Row="2" FontWeight="SemiBold" Margin="1,1"/>
+                                                            <Label x:Name="Visit2PowerOnLabel" Content="Power On - " Grid.Row="3" FontWeight="SemiBold" Margin="1,1"/>
+                                                        </Grid>
+                                                    </Grid>
+                                                </GroupBox>
+
+                                                <GroupBox x:Name="Visit3GroupBox" Header="Visit 3" Grid.Column="2" FontWeight="SemiBold" Margin="1,1">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="*"/>
+                                                            <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid Grid.Column="0" Margin="1,1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Label x:Name="Visit3StartLabel" Content="Start Time - " Grid.Row="0" FontWeight="SemiBold" Margin="1,1"/>
+                                                            <Label x:Name="Visit3EndLabel" Content="End Time - " Grid.Row="1" FontWeight="SemiBold" Margin="1,1"/>
+                                                            <Label x:Name="Visit3KWHLabel" Content="KWH - " Grid.Row="2" FontWeight="SemiBold" Margin="1,1"/>
+                                                            <Label x:Name="Visit3Liquidous" Content="Liquidus - " Grid.Row="3" FontWeight="SemiBold" Margin="1,1"/>
+                                                        </Grid>
+
+                                                        <Grid Grid.Column="1" Margin="1,1">
+                                                            <Grid.RowDefinitions>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                                <RowDefinition Height="32"/>
+                                                            </Grid.RowDefinitions>
+                                                            <Label x:Name="Visit3JomineyLabel" Content="Jominey" Grid.Row="0" FontWeight="SemiBold" Margin="1,1"/>
+                                                            <Label x:Name="Visit3WeightLabel" Content="Steel Weight -" Grid.Row="1" FontWeight="SemiBold" Margin="1,1"/>
+                                                            <Label x:Name="Visit3GasStirLabel" Content="Gas Stir - " Grid.Row="2" FontWeight="SemiBold" Margin="1,1"/>
+                                                            <Label x:Name="Visit3PowerOnLabel" Content="Power On - " Grid.Row="3" FontWeight="SemiBold" Margin="1,1"/>
+                                                        </Grid>
+                                                    </Grid>
+                                                </GroupBox>
+                                            </Grid>
+                                        </StackPanel>
+
+                                        <StackPanel DockPanel.Dock="Bottom">
+                                            <GroupBox Header="Actual Additions" FontWeight="SemiBold" Margin="1,1">
+                                                <DataGrid x:Name="ActualDropGrid" Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" AutoGenerateColumns="False" Margin="5,5" AlternationCount="2" FrozenColumnCount="2" IsReadOnly="True">
+                                                    <DataGrid.Resources>
+                                                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                            <Setter Property="Height" Value="30"/>
+                                                            <Setter Property="FontStretch" Value="Normal"/>
+                                                            <Setter Property="Background" Value="Gray"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                                            <Setter Property="BorderBrush" Value="Black"/>
+                                                        </Style>
+                                                        <Style TargetType="{x:Type DataGridCell}">
+                                                            <Setter Property="BorderThickness" Value="1,1,1,1"/>
+                                                            <Setter Property="BorderBrush" Value="Black"/>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsSelected" Value="True">
+                                                                    <Setter Property="Background" Value="Blue"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                        <Style TargetType="{x:Type DataGridRow}">
+                                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                                            <Setter Property="BorderBrush" Value="Black"/>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                                                    <Setter Property="Background" Value="LightGray"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </DataGrid.Resources>
+                                                    <DataGrid.Columns>
+                                                        <DataGridTextColumn Header="Drop" Binding="{Binding DropNumber}" FontWeight="SemiBold" Width="50"/>
+                                                        <DataGridTextColumn Header="Addition Time" Binding="{Binding  DropDateTime, StringFormat='HH:mm:ss yyyy-MM-dd'}" FontWeight="SemiBold" Width="150"/>
+                                                        <DataGridTextColumn Header="Al" Binding="{Binding Al}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="Coke" Binding="{Binding Coke}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="Cu" Binding="{Binding Cu}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="FeB" Binding="{Binding FeB}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="FeNb" Binding="{Binding FeNb}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="FeMo" Binding="{Binding FeMo}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="FeP" Binding="{Binding FeP}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="FeSi" Binding="{Binding FeSi}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="FeTi" Binding="{Binding FeTi}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="FeV" Binding="{Binding FeV}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="H.C. FeCr" Binding="{Binding HCFeCr}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="H.C. FeMn" Binding="{Binding HCFeMn}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="L.C. FeCr" Binding="{Binding LCFeCr}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="M.C. FeMn" Binding="{Binding MCFeMn}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="Low Al FeSi" Binding="{Binding LowAlFeSi}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="Low N2 Coke" Binding="{Binding LowN2Coke}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="Ni" Binding="{Binding Ni}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="Nitrided FeMn" Binding="{Binding NiFeMn}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="NitroVan" Binding="{Binding NitorVan}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="SiMn" Binding="{Binding SiMn}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="Sulfur" Binding="{Binding Sulfur}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="CaAl" Binding="{Binding CaAl}" FontWeight="SemiBold" Width="*"/>
+                                                    </DataGrid.Columns>
+                                                </DataGrid>
+                                            </GroupBox>
+                                            <GroupBox Header="Heat Additions" FontWeight="SemiBold" Margin="1,1">
+                                                <DataGrid x:Name="AdditionsGrid" Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" AutoGenerateColumns="False" Margin="5,5" AlternationCount="2" FrozenColumnCount="2" IsReadOnly="True">
+                                                    <DataGrid.Resources>
+                                                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                            <Setter Property="Height" Value="30"/>
+                                                            <Setter Property="FontStretch" Value="Normal"/>
+                                                            <Setter Property="Background" Value="Gray"/>
+                                                            <Setter Property="Foreground" Value="White"/>
+                                                            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                                            <Setter Property="BorderBrush" Value="Black"/>
+                                                        </Style>
+                                                        <Style TargetType="{x:Type DataGridCell}">
+                                                            <Setter Property="BorderThickness" Value="1,1,1,1"/>
+                                                            <Setter Property="BorderBrush" Value="Black"/>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="IsSelected" Value="True">
+                                                                    <Setter Property="Background" Value="Blue"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                        <Style TargetType="{x:Type DataGridRow}">
+                                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                                            <Setter Property="BorderBrush" Value="Black"/>
+                                                            <Style.Triggers>
+                                                                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                                                    <Setter Property="Background" Value="LightGray"/>
+                                                                </Trigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </DataGrid.Resources>
+                                                    <DataGrid.Columns>
+                                                        <DataGridTextColumn Header="Drop" Binding="{Binding DropNumber}" FontWeight="SemiBold" Width="50"/>
+                                                        <DataGridTextColumn Header="Addition Time" Binding="{Binding  DropDateTime, StringFormat='HH:mm:ss yyyy-MM-dd'}" FontWeight="SemiBold" Width="150"/>
+                                                        <DataGridTextColumn Header="Al" Binding="{Binding Al}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="Coke" Binding="{Binding Coke}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="Cu" Binding="{Binding Cu}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="FeB" Binding="{Binding FeB}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="FeNb" Binding="{Binding FeNb}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="FeMo" Binding="{Binding FeMo}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="FeP" Binding="{Binding FeP}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="FeSi" Binding="{Binding FeSi}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="FeTi" Binding="{Binding FeTi}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="FeV" Binding="{Binding FeV}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="H.C. FeCr" Binding="{Binding HCFeCr}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="H.C. FeMn" Binding="{Binding HCFeMn}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="L.C. FeCr" Binding="{Binding LCFeCr}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="M.C. FeMn" Binding="{Binding MCFeMn}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="Low Al FeSi" Binding="{Binding LowAlFeSi}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="Low N2 Coke" Binding="{Binding LowN2Coke}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="Ni" Binding="{Binding Ni}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="Nitrided FeMn" Binding="{Binding NiFeMn}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="NitroVan" Binding="{Binding NitorVan}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="SiMn" Binding="{Binding SiMn}" FontWeight="SemiBold" Width="*"/>
+                                                        <DataGridTextColumn Header="Sulfur" Binding="{Binding Sulfur}" FontWeight="SemiBold" Width="*"/>
+                                                    </DataGrid.Columns>
+                                                </DataGrid>
+                                            </GroupBox>
+                                        </StackPanel>
+                                        
+                                        <StackPanel>
+                                                <Grid Margin="1,1">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <GroupBox Header="Temp's" Grid.Column="0" FontWeight="SemiBold" Margin="1,1">
+                                                        <DataGrid x:Name="HistoryTempGrid" Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" AutoGenerateColumns="False" Margin="5,5" AlternationCount="2" FrozenColumnCount="2" IsReadOnly="True">
+                                                            <DataGrid.Resources>
+                                                                <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                                    <Setter Property="Height" Value="30"/>
+                                                                    <Setter Property="FontStretch" Value="Normal"/>
+                                                                    <Setter Property="Background" Value="Gray"/>
+                                                                    <Setter Property="Foreground" Value="White"/>
+                                                                    <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                                                    <Setter Property="BorderBrush" Value="Black"/>
+                                                                </Style>
+                                                                <Style TargetType="{x:Type DataGridCell}">
+                                                                    <Setter Property="BorderThickness" Value="1,1,1,1"/>
+                                                                    <Setter Property="BorderBrush" Value="Black"/>
+                                                                    <Style.Triggers>
+                                                                        <Trigger Property="IsSelected" Value="True">
+                                                                            <Setter Property="Background" Value="Blue"/>
+                                                                        </Trigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                                <Style TargetType="{x:Type DataGridRow}">
+                                                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                                                    <Setter Property="BorderBrush" Value="Black"/>
+                                                                    <Style.Triggers>
+                                                                        <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                                                            <Setter Property="Background" Value="LightGray"/>
+                                                                        </Trigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </DataGrid.Resources>
+                                                            <DataGrid.Columns>
+                                                                <DataGridTextColumn Header="Visit" Binding="{Binding Visit}" Width="35" FontWeight="SemiBold"/>
+                                                                <DataGridTextColumn Header="Date/Time" Binding="{Binding TempDate, StringFormat='HH:mm:ss yyyy-MM-dd'}" Width="*" FontWeight="SemiBold"/>
+                                                                <DataGridTextColumn Header="Temp" Binding="{Binding Temp}" Width="65" FontWeight="SemiBold"/>
+                                                                <DataGridTextColumn Header="O2/PPM" Binding="{Binding O2PPM}" Width="65" FontWeight="SemiBold"/>
+                                                            </DataGrid.Columns>
+                                                        </DataGrid>
+                                                    </GroupBox>
+
+                                                    <GroupBox Header="Gas Stir" Grid.Column="1" ScrollViewer.VerticalScrollBarVisibility="Auto" FontWeight="SemiBold" Margin="1,1">
+                                                        <DataGrid x:Name="HistoryGasStirTimeGrid" Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" AutoGenerateColumns="False" Margin="5,5" AlternationCount="2" FrozenColumnCount="2" IsReadOnly="True">
+                                                            <DataGrid.Resources>
+                                                                <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                                    <Setter Property="Height" Value="30"/>
+                                                                    <Setter Property="FontStretch" Value="Normal"/>
+                                                                    <Setter Property="Background" Value="Gray"/>
+                                                                    <Setter Property="Foreground" Value="White"/>
+                                                                    <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                                                    <Setter Property="BorderBrush" Value="Black"/>
+                                                                </Style>
+                                                                <Style TargetType="{x:Type DataGridCell}">
+                                                                    <Setter Property="BorderThickness" Value="1,1,1,1"/>
+                                                                    <Setter Property="BorderBrush" Value="Black"/>
+                                                                    <Style.Triggers>
+                                                                        <Trigger Property="IsSelected" Value="True">
+                                                                            <Setter Property="Background" Value="Blue"/>
+                                                                        </Trigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                                <Style TargetType="{x:Type DataGridRow}">
+                                                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                                                    <Setter Property="BorderBrush" Value="Black"/>
+                                                                    <Style.Triggers>
+                                                                        <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                                                            <Setter Property="Background" Value="LightGray"/>
+                                                                        </Trigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </DataGrid.Resources>
+                                                            <DataGrid.Columns>
+                                                                <DataGridTextColumn Header="Visit" Binding="{Binding Visit}" Width="35" FontWeight="SemiBold"/>
+                                                                <DataGridTextColumn Header="Stir Start" Binding="{Binding StirStart, StringFormat='HH:mm:ss yyyy-MM-dd'}" Width="*" FontWeight="SemiBold"/>
+                                                                <DataGridTextColumn Header="Stir End" Binding="{Binding StirEnd, StringFormat='HH:mm:ss yyyy-MM-dd'}" Width="*" FontWeight="SemiBold"/>
+                                                                <DataGridTextColumn Header="SCFM" Binding="{Binding SCFM}" Width="50" FontWeight="SemiBold"/>
+                                                            <DataGridTextColumn Header="BP" Binding="{Binding BackPres}" Width="50" FontWeight="SemiBold"/>
+                                                            <DataGridTextColumn Header="Plug" Binding="{Binding Plug}" Width="35" FontWeight="SemiBold"/>
+                                                                <DataGridTextColumn Header="Gas" Binding="{Binding GasType}" Width="65" FontWeight="SemiBold"/>
+                                                            </DataGrid.Columns>
+                                                        </DataGrid>
+                                                    </GroupBox>
+
+                                                    <GroupBox Header="EMS Stir" Grid.Column="2" FontWeight="SemiBold" Margin="1,1">
+                                                        <DataGrid x:Name="HistoryEMSGrid" Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" AutoGenerateColumns="False" Margin="5,5" AlternationCount="2" FrozenColumnCount="2" IsReadOnly="True">
+                                                            <DataGrid.Resources>
+                                                                <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                                    <Setter Property="Height" Value="30"/>
+                                                                    <Setter Property="FontStretch" Value="Normal"/>
+                                                                    <Setter Property="Background" Value="Gray"/>
+                                                                    <Setter Property="Foreground" Value="White"/>
+                                                                    <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                                                    <Setter Property="BorderBrush" Value="Black"/>
+                                                                </Style>
+                                                                <Style TargetType="{x:Type DataGridCell}">
+                                                                    <Setter Property="BorderThickness" Value="1,1,1,1"/>
+                                                                    <Setter Property="BorderBrush" Value="Black"/>
+                                                                    <Style.Triggers>
+                                                                        <Trigger Property="IsSelected" Value="True">
+                                                                            <Setter Property="Background" Value="Blue"/>
+                                                                        </Trigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                                <Style TargetType="{x:Type DataGridRow}">
+                                                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                                                    <Setter Property="BorderBrush" Value="Black"/>
+                                                                    <Style.Triggers>
+                                                                        <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                                                            <Setter Property="Background" Value="LightGray"/>
+                                                                        </Trigger>
+                                                                    </Style.Triggers>
+                                                                </Style>
+                                                            </DataGrid.Resources>
+                                                            <DataGrid.Columns>
+                                                                <DataGridTextColumn Header="Visit" Binding="{Binding Visit}" Width="50" FontWeight="SemiBold"/>
+                                                            <DataGridTextColumn Header="Stir Start" Binding="{Binding StirStart, StringFormat='HH:mm:ss yyyy-MM-dd'}" Width="*" FontWeight="SemiBold"/>
+                                                            <DataGridTextColumn Header="Stir End" Binding="{Binding StirEnd, StringFormat='HH:mm:ss yyyy-MM-dd'}" Width="*" FontWeight="SemiBold"/>
+                                                            </DataGrid.Columns>
+                                                        </DataGrid>
+                                                    </GroupBox>
+                                                </Grid>
+                                            </StackPanel>
+
+                                           
+                                    </DockPanel>
+                                </TabItem>
+                                <TabItem Header="Chemistry">
+                                    <StackPanel Margin="5,5">
+                                        <Grid Margin="1,1">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <!--Upper Row Jominey/etc-->
+                                                <GroupBox Grid.Column="0" Header="Jominey" FontWeight="SemiBold">
+                                                    <DockPanel>
+                                                        <c1:C1Chart Name="JomineyChart" Grid.Row="1" Grid.Column="3" ChartType="LineSmoothed" Height="350" Margin="5,5">
+                                                            <c1:C1Chart.Data>
+                                                                <c1:ChartData>
+                                                                    <c1:DataSeries Name="JominyPoints" Label="Temp" RenderMode="Default"/>
+                                                                </c1:ChartData>
+                                                            </c1:C1Chart.Data>
+                                                            <c1:C1ChartLegend/>
+                                                        </c1:C1Chart>
+                                                    </DockPanel>
+                                                </GroupBox>
+                                                <GroupBox Header="Final Chem" Grid.Column="1" FontWeight="SemiBold">
+                                                    
+                                                </GroupBox>
+                                            </Grid>
+                                            
+                                            <Grid Grid.Row="1">
+                                                <!--ChemResults-->
+                                                <GroupBox Header="Chem" FontWeight="SemiBold" Margin="1,1">
+                                                    <DataGrid x:Name="ChemHistoryGrid" Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" AutoGenerateColumns="False" Margin="5,5" AlternationCount="2" FrozenColumnCount="2" IsReadOnly="True">
+                                                        <DataGrid.Resources>
+                                                            <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                                <Setter Property="Height" Value="30"/>
+                                                                <Setter Property="FontStretch" Value="Normal"/>
+                                                                <Setter Property="Background" Value="Gray"/>
+                                                                <Setter Property="Foreground" Value="White"/>
+                                                                <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                                                <Setter Property="BorderBrush" Value="Black"/>
+                                                            </Style>
+                                                            <Style TargetType="{x:Type DataGridCell}">
+                                                                <Setter Property="BorderThickness" Value="1,1,1,1"/>
+                                                                <Setter Property="BorderBrush" Value="Black"/>
+                                                                <Style.Triggers>
+                                                                    <Trigger Property="IsSelected" Value="True">
+                                                                        <Setter Property="Background" Value="Blue"/>
+                                                                    </Trigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                            <Style TargetType="{x:Type DataGridRow}">
+                                                                <Setter Property="FontWeight" Value="SemiBold"/>
+                                                                <Setter Property="BorderBrush" Value="Black"/>
+                                                                <Style.Triggers>
+                                                                    <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                                                        <Setter Property="Background" Value="LightGray"/>
+                                                                    </Trigger>
+                                                                </Style.Triggers>
+                                                            </Style>
+                                                        </DataGrid.Resources>
+                                                        <DataGrid.Columns>
+                                                            <DataGridTextColumn Header="Type" Binding="{Binding Type}" FontWeight="SemiBold" Width="35"/>
+                                                            <DataGridTextColumn Header="Date/Time" Binding="{Binding  ChemDate}" FontWeight="SemiBold" Width="130"/>
+                                                            <DataGridTextColumn Header="C" Binding="{Binding C}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Mn" Binding="{Binding Mn}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="V" Binding="{Binding V}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Si" Binding="{Binding Si}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="S" Binding="{Binding S}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="P" Binding="{Binding P}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Cu" Binding="{Binding Cu}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Cr" Binding="{Binding Cr}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Ni" Binding="{Binding Ni}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Mo" Binding="{Binding Mo}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Al" Binding="{Binding Al}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Sa" Binding="{Binding Sa}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Cb" Binding="{Binding Cb}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Pb" Binding="{Binding Pb}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Sn" Binding="{Binding Sn}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Ca" Binding="{Binding Ca}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="B" Binding="{Binding B}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Ti" Binding="{Binding Ti}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="N" Binding="{Binding N}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="L-C" Binding="{Binding LECOC}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="L-S" Binding="{Binding LECOS}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="L-N2" Binding="{Binding LECON2}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Di" Binding="{Binding Di}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="USCuEQ" Binding="{Binding USCuEQ}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Tensile" Binding="{Binding Tensile}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Yield" Binding="{Binding Yield}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="CARBEQ" Binding="{Binding CARBEQ}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="CE1" Binding="{Binding CE1}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="K-Factor" Binding="{Binding KFactor}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="As" Binding="{Binding As}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Bi" Binding="{Binding Bi}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Ce" Binding="{Binding Ce}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Co" Binding="{Binding Co}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Sb" Binding="{Binding Sb}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Se" Binding="{Binding Se}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Te" Binding="{Binding Te}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Zn" Binding="{Binding Zn}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Zn" Binding="{Binding Zn}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="GST" Binding="{Binding GSTTensile}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="Zr" Binding="{Binding Zr}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="O" Binding="{Binding O}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="H" Binding="{Binding H}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="L-TOX" Binding="{Binding LECOTOX}" FontWeight="SemiBold" Width="*"/>
+                                                            <DataGridTextColumn Header="DIBVAL" Binding="{Binding DIBVAL}" FontWeight="SemiBold" Width="*"/>
+                                                        </DataGrid.Columns>
+                                                    </DataGrid>
+                                                </GroupBox>
+                                                
+                                            </Grid>
+                                        </Grid>
+                                    </StackPanel>
+                                </TabItem>
+                                <TabItem Header="Slag">
+                                    
+                                </TabItem>
+                            </TabControl>
+                        </Grid>
+                    </StackPanel>
+                </TabItem>
+                <TabItem Header="Grade/WI">
+                    <StackPanel>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="150"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Content="Grade" Grid.Column="0" FontWeight="SemiBold" Margin="1,1"/>
+                                <ComboBox x:Name="GradeSearchCombo" Grid.Column="1" IsEditable="True" Margin="1,1"/>
+                                <Button x:Name="GradeSearchButton" Grid.Column="2" Content="Search" Margin="1,1" Click="GradeSearchButton_Click"/>
+                            </Grid>
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="350"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <DataGrid x:Name="GradeChemGrid" Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" AutoGenerateColumns="False" Margin="5,5" AlternationCount="2" FrozenColumnCount="2" IsReadOnly="True">
+                                    <DataGrid.Resources>
+                                        <Style TargetType="{x:Type DataGridColumnHeader}">
+                                            <Setter Property="Height" Value="30"/>
+                                            <Setter Property="FontStretch" Value="Normal"/>
+                                            <Setter Property="Background" Value="Gray"/>
+                                            <Setter Property="Foreground" Value="White"/>
+                                            <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                        </Style>
+                                        <Style TargetType="{x:Type DataGridCell}">
+                                            <Setter Property="BorderThickness" Value="1,1,1,1"/>
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter Property="Background" Value="Blue"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                        <Style TargetType="{x:Type DataGridRow}">
+                                            <Setter Property="FontWeight" Value="SemiBold"/>
+                                            <Setter Property="BorderBrush" Value="Black"/>
+                                            <Style.Triggers>
+                                                <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                                    <Setter Property="Background" Value="LightGray"/>
+                                                </Trigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </DataGrid.Resources>
+                                    <DataGrid.Columns>
+                                        <DataGridTextColumn Header="Element" Binding="{Binding Element}" Width="*"/>
+                                        <DataGridTextColumn Header="Min" Binding="{Binding Min}" Width="75"/>
+                                        <DataGridTextColumn Header="Aim" Binding="{Binding Aim}" Width="75"/>
+                                        <DataGridTextColumn Header="Max" Binding="{Binding Max}" Width="75"/>
+                                    </DataGrid.Columns>
+                                </DataGrid>
+                                <StackPanel Grid.Column="1">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="200"/>
+                                            <RowDefinition Height="200"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+                                        <DataGrid x:Name="GradeFluxGrid" Grid.Row="0" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" AutoGenerateColumns="False" Margin="5,5" AlternationCount="2" FrozenColumnCount="2" IsReadOnly="True">
+                                            <DataGrid.Resources>
+                                                <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                    <Setter Property="Height" Value="30"/>
+                                                    <Setter Property="FontStretch" Value="Normal"/>
+                                                    <Setter Property="Background" Value="Gray"/>
+                                                    <Setter Property="Foreground" Value="White"/>
+                                                    <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                                    <Setter Property="BorderBrush" Value="Black"/>
+                                                </Style>
+                                                <Style TargetType="{x:Type DataGridCell}">
+                                                    <Setter Property="BorderThickness" Value="1,1,1,1"/>
+                                                    <Setter Property="BorderBrush" Value="Black"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsSelected" Value="True">
+                                                            <Setter Property="Background" Value="Blue"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                                <Style TargetType="{x:Type DataGridRow}">
+                                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                                    <Setter Property="BorderBrush" Value="Black"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                                            <Setter Property="Background" Value="LightGray"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </DataGrid.Resources>
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="Flux" Binding="{Binding Flux}" Width="75"/>
+                                                <DataGridTextColumn Header="Flux Comment" Binding="{Binding FluxComment}" Width="*"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+
+                                        <DataGrid x:Name="GradeSpecialInstructionGrid" Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" AutoGenerateColumns="False" Margin="5,5" AlternationCount="2" FrozenColumnCount="2" IsReadOnly="True">
+                                            <DataGrid.Resources>
+                                                <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                    <Setter Property="Height" Value="30"/>
+                                                    <Setter Property="FontStretch" Value="Normal"/>
+                                                    <Setter Property="Background" Value="Gray"/>
+                                                    <Setter Property="Foreground" Value="White"/>
+                                                    <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                                    <Setter Property="BorderBrush" Value="Black"/>
+                                                </Style>
+                                                <Style TargetType="{x:Type DataGridCell}">
+                                                    <Setter Property="BorderThickness" Value="1,1,1,1"/>
+                                                    <Setter Property="BorderBrush" Value="Black"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsSelected" Value="True">
+                                                            <Setter Property="Background" Value="Blue"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                                <Style TargetType="{x:Type DataGridRow}">
+                                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                                    <Setter Property="BorderBrush" Value="Black"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                                            <Setter Property="Background" Value="LightGray"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </DataGrid.Resources>
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="Special Instructions" Binding="{Binding Instruction}" Width="*"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+
+                                        <DataGrid x:Name="GradeWorkFlowGrid" Grid.Row="2" ScrollViewer.VerticalScrollBarVisibility="Auto" VerticalAlignment="Top" AutoGenerateColumns="False" Margin="5,5" AlternationCount="2" FrozenColumnCount="2" IsReadOnly="True">
+                                            <DataGrid.Resources>
+                                                <Style TargetType="{x:Type DataGridColumnHeader}">
+                                                    <Setter Property="Height" Value="30"/>
+                                                    <Setter Property="FontStretch" Value="Normal"/>
+                                                    <Setter Property="Background" Value="Gray"/>
+                                                    <Setter Property="Foreground" Value="White"/>
+                                                    <Setter Property="BorderThickness" Value="0,0,1,1"/>
+                                                    <Setter Property="BorderBrush" Value="Black"/>
+                                                </Style>
+                                                <Style TargetType="{x:Type DataGridCell}">
+                                                    <Setter Property="BorderThickness" Value="1,1,1,1"/>
+                                                    <Setter Property="BorderBrush" Value="Black"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="IsSelected" Value="True">
+                                                            <Setter Property="Background" Value="Blue"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                                <Style TargetType="{x:Type DataGridRow}">
+                                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                                    <Setter Property="BorderBrush" Value="Black"/>
+                                                    <Style.Triggers>
+                                                        <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                                                            <Setter Property="Background" Value="LightGray"/>
+                                                        </Trigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </DataGrid.Resources>
+                                            <DataGrid.Columns>
+                                                <DataGridTextColumn Header="Order" Binding="{Binding OrderByThis}" Width="40"/>
+                                                <DataGridTextColumn Header="Work Flow" Binding="{Binding WorkFlow}" Width="*"/>
+                                            </DataGrid.Columns>
+                                        </DataGrid>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+        </DockPanel>
+    </Border>
+</Window>
